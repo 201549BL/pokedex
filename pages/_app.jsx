@@ -1,5 +1,5 @@
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "/styles/globalStyle";
+import GlobalStyle from "../styles/GlobalStyle.jsx";
 import { lightTheme } from "../styles/themes/lightTheme";
 import Layout from "../components/layout";
 import Head from "next/head";
