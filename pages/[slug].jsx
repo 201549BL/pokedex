@@ -109,9 +109,9 @@ export async function getStaticProps({ params }) {
     const res = await fetch(item.ability.url);
     const description = await res.json();
 
-    const desc = description.effect_entries.filter(
-      (e) => e.language.name === "en"
-    )[0].short_effect;
+    const desc =
+      description.effect_entries.filter((e) => e.language.name === "en")[0]
+        ?.short_effect ?? "Description missing";
 
     const is_hidden = pokemonData.abilities.filter((a) => {});
 

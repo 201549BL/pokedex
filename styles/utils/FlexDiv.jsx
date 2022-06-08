@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const StyledFlexDiv = styled.div`
   display: flex;
   flex-direction: ${({ row, column }) => {
-    console.log(column);
     if (row && column)
       throw new Error("Enter either 'row' or 'column' in 'FlexDiv' component");
 
@@ -17,7 +16,6 @@ export const StyledFlexDiv = styled.div`
 `;
 
 const FlexDiv = ({ children, ...rest }) => {
-  console.log(rest);
   return <StyledFlexDiv {...rest}>{children}</StyledFlexDiv>;
 };
 

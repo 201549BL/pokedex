@@ -32,10 +32,12 @@ export const StyledCapsule = styled.div`
   .info-container__content__lower {
     background: #eaf8ea;
     padding: 0.5rem 0.5rem;
+
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 
     display: flex;
+
     gap: 0.5rem;
 
     *:first-letter {
