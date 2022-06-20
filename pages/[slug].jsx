@@ -12,44 +12,6 @@ import InfoPage from "../components/entry/info-page";
 import Sprite from "../components/entry/sprite";
 import Moves from "../components/entry/moves";
 
-const PokemonCard = styled.article`
-  display: flex;
-
-  overflow: auto;
-  max-height: 600px;
-
-  max-width: 1000px;
-
-  background: rgb(45, 138, 123);
-  .basis {
-    flex-basis: 50%;
-  }
-
-  .image {
-    padding-top: 0.5rem;
-    position: sticky;
-    top: 0;
-
-    img {
-      image-rendering: pixelated;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: crisp-edges;
-
-      background-color: pink;
-
-      border-radius: 5px;
-    }
-  }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-
-    .image {
-      position: unset;
-    }
-  }
-`;
-
 export default function Entry({
   name,
   spriteUrl,
@@ -146,11 +108,11 @@ export async function getStaticProps({ params }) {
       return {
         name: m.move.name,
         learnedAtLevel: relMoves.level_learned_at,
-        LearnMethod: relMoves.move_learn_method.name,
+        learnMethod: relMoves.move_learn_method.name,
         accuracy: moveData.accuracy,
         power: moveData.power,
         dmgClass: moveData.damage_class.name,
-        effectEntry: String(moveData.effect_entries[0].effect)
+        effectEntry: String(moveData.effect_entries[0].short_effect)
           // .replace(/\n/g, "")
           .replace("$effect_chance%", `${moveData.effect_chance}%`),
         typing: moveData.type.name,
@@ -158,7 +120,24 @@ export async function getStaticProps({ params }) {
     })
   );
 
-  const moves = tempMoves.filter((e) => e);
+  let moves = tempMoves
+    .filter((e) => e)
+    .sort((a, b) => a.learnedAtLevel - b.learnedAtLevel);
+
+  const movesNotLearnedByLevel = moves.splice(
+    0,
+    moves.findIndex((m) => {
+      // console.log(m);
+      return m.learnedAtLevel > 0;
+    })
+  );
+
+  moves = [...moves, ...movesNotLearnedByLevel];
+
+  // console.log(
+  //   "rest",
+  //   moves.findIndex((m) => m.learnedAtLevel > 0)
+  // );
 
   return {
     props: {

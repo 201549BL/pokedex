@@ -21,13 +21,9 @@ const StyledPagination = styled.header`
     height: 30px;
     background: #ca84dc;
   }
+
   .content {
-    display: flex;
-    flex-basis: auto;
-
     background: ${({ bgColor }) => backgroundColors[bgColor]};
-
-    height: auto;
 
     .image {
       flex-basis: 40%;
@@ -41,16 +37,12 @@ const StyledPagination = styled.header`
 
     .info-page {
       flex-basis: 60%;
+      flex-shrink: 1;
     }
   }
 `;
 
-const headerTexts = [
-  "abilities",
-  "not implemented yet",
-  "moves",
-  "not implemented yet",
-];
+const headerTexts = ["abilities", "stats", "moves", "not implemented yet"];
 
 const Pagination = ({ image, infoPages = [], children }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -67,10 +59,10 @@ const Pagination = ({ image, infoPages = [], children }) => {
           <p>{currentPage}</p>
         </FlexDiv>
       </div>
-      <div className="content">
+      <FlexDiv row className="content">
         <div className="image">{image}</div>
         <div className="info-page">{children[currentPage]}</div>
-      </div>
+      </FlexDiv>
     </StyledPagination>
   );
 };
