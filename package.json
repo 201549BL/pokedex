@@ -14,6 +14,7 @@
     "node-fetch": "^2.6.7",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-scroll-sync-hook": "^0.0.3",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

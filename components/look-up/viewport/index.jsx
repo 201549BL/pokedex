@@ -1,56 +1,65 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import styled from "styled-components";
 
 const StyledViewport = styled.div`
-  position: absolute;
-  right: 0;
+  display: flex;
+  flex-direction: column;
   margin: 0 1rem;
 
-  background: pink;
+  background: #f9f9f9;
 
   align-self: center;
+  height: 80vh;
 
-  height: 90%;
-  width: 60%;
+  flex-basis: 30%;
 
-  overflow: auto;
-  scroll-behavior: smooth;
+  position: relative;
 
-  scroll-snap-type: y mandatory;
-  scroll-snap-align: center;
+  border-radius: 5px;
+  border: 5px #cfe0dc solid;
 
-  .padding {
-    padding: 50% 0;
+  .inner {
+    height: inherit;
+    overflow: hidden;
+
+    border: 3px #49545a solid;
+
+    img {
+      width: 100%;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    .padding {
+      height: 50%;
+    }
+  }
+
+  .indicator {
+    background: inherit;
+    height: 2rem;
+    width: 2rem;
+
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) translateX(90%);
+    clip-path: polygon(0 0, 50% 50%, 0 100%);
   }
 `;
-
-const Viewport = ({ scrollFactor, children }) => {
-  const scrollRef = useRef(undefined);
-
-  useEffect(() => {
-    let timer;
-
-    timer = setTimeout(
-      () =>
-        scrollRef.current.scrollTo(
-          0,
-          (scrollFactor / 100) * scrollRef.current.scrollHeight
-        ),
-      100
-    );
-
-    console.log((scrollFactor / 100) * scrollRef.current.scrollHeight);
-
-    return () => clearTimeout(timer);
-  }, [scrollFactor]);
-
+// eslint-disable-next-line react/display-name
+const Viewport = React.forwardRef((props, ref) => {
   return (
-    <StyledViewport ref={scrollRef}>
-      <div className="padding"></div>
-      {children}
-      <div className="padding"></div>
+    <StyledViewport>
+      <div className="inner" ref={ref}>
+        <div className="padding"></div>
+        {props.children}
+        <div className="padding"></div>
+      </div>
+      <div className="indicator"></div>
     </StyledViewport>
   );
-};
+});
 
 export default Viewport;

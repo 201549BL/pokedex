@@ -1,10 +1,12 @@
 import React from "react";
 
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 const StyledSpinner = styled.img`
   width: 100%;
-  height: 100%;
+  max-height: 80vmin;
+
+  position: fixed;
 
   object-fit: contain;
 
@@ -13,6 +15,9 @@ const StyledSpinner = styled.img`
   margin-left: -50%;
 
   transition: all 0.2s ease-out;
+
+  overflow: hidden;
+  z-index: -1;
 
   /* position: absolute; */
 

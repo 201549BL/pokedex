@@ -2,7 +2,7 @@ import Head from "next/head";
 import Scroller from "../components/look-up/scroll";
 import Viewport from "../components/look-up/viewport";
 import styled from "styled-components";
-import useScrollPosition from "../hooks/useScrollPosition";
+
 import Spinner from "../components/look-up/spinner";
 import {
   useState,
@@ -12,23 +12,28 @@ import {
   useMemo,
   useLayoutEffect,
 } from "react";
+import useScrollSync from "../hooks/useScrollSync";
 
 const StyledLookup = styled.main`
-  display: flex;
-
   height: 100vh;
-
   line-height: 2;
 
-  overflow: hidden;
+  display: flex;
+  justify-content: right;
+
+  padding: 0 1rem;
 
   .background {
     position: fixed;
+    top: 0;
+    left: 0;
 
     width: 100vw;
     height: 100vh;
 
     z-index: -1;
+
+    overflow: hidden;
 
     background: repeating-linear-gradient(
       #2dbc4b,
@@ -39,63 +44,27 @@ const StyledLookup = styled.main`
 
     filter: blur(1px);
   }
-
-  .viewport {
-    flex-basis: 50%;
-
-    height: 80vh;
-
-    display: flex;
-
-    position: relative;
-
-    align-self: center;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .scroller {
-    flex-basis: 50%;
-
-    height: 80vh;
-    background: #ece836;
-
-    align-self: center;
-
-    overflow: auto;
-
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-
-    .scroll-area {
-      scroll-snap-align: center;
-    }
-    .top-padding {
-      height: 50%;
-    }
-    .bottom-padding {
-      height: 50%;
-    }
-  }
 `;
 
 export default function Home({ pokemon }) {
   const [scroll, setScroll] = useState(0);
-  const ref = useRef(0);
+  const scrollerRef = useRef(undefined);
+  const spriteRef = useRef(undefined);
 
-  const pokemonData = useMemo(
-    () =>
-      pokemon.results.map((p) => {
-        return (
-          <h2 key={p.name} className={`scroll-area`}>
-            {p.name}
-          </h2>
-        );
-      }),
-    [pokemon.results]
+  const { registerPane, unregisterPane, onScrollHandler } = useScrollSync();
+
+  const refs = useMemo(
+    () => [scrollerRef, spriteRef],
+    [scrollerRef, spriteRef]
   );
+
+  useEffect(() => {
+    refs.forEach((ref) => registerPane(ref));
+
+    return () => {
+      refs.forEach((ref) => unregisterPane(ref));
+    };
+  }, []);
 
   const pokemonSprites = useMemo(
     () =>
@@ -112,20 +81,17 @@ export default function Home({ pokemon }) {
     []
   );
 
-  const calcPxToDeg = (scrollTop, scrollHeight) => {
-    // console.log("scrollTop", scrollTop);
-    // console.log("scrollHeight", scrollHeight);
+  const calcFactor = (scrollTop, scrollHeight) => {
+    const floor = Math.floor((scrollTop / scrollHeight) * 100);
 
-    return Math.floor((scrollTop / scrollHeight) * 100);
+    return floor;
   };
 
-  useEffect(() => {
-    console.log(scroll);
-  });
-
   const handleScroll = (e) => {
+    onScrollHandler(e);
+
     setScroll(
-      calcPxToDeg(
+      calcFactor(
         e.target.scrollTop,
         e.target.scrollHeight - e.target.clientHeight
       )
@@ -135,17 +101,15 @@ export default function Home({ pokemon }) {
   return (
     <StyledLookup>
       <div className="background" />
-      <div className="viewport">
-        <Spinner rotation={scroll * 10} />
-        <Viewport scrollFactor={scroll}>{pokemonSprites}</Viewport>
-      </div>
-      <div className="scroller" onScroll={handleScroll} ref={ref}>
-        <Scroller onScroll={handleScroll}>
-          <div className="top-padding"></div>
-          {pokemonData}
-          <div className="bottom-padding"></div>
-        </Scroller>
-      </div>
+      <Spinner rotation={scroll * 10} />
+
+      <Viewport ref={spriteRef}>{pokemonSprites}</Viewport>
+
+      <Scroller
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        pokemonData={pokemon.results}
+      ></Scroller>
     </StyledLookup>
   );
 }
