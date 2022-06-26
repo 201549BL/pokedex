@@ -10,7 +10,7 @@ import Filter from "./Filter";
 import useCapsuleFilter from "../../../hooks/useCapsuleFilter";
 
 const StyledMoves = styled.div`
-  line-height: 2;
+  padding-top: 0.5rem;
 
   p.title {
     margin-left: 3rem;

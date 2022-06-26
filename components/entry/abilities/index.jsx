@@ -3,8 +3,6 @@ import Capsule from "../capsule";
 import { textColor } from "../../../styles/mixins/textColor";
 
 const StyledAbilites = styled.div`
-  line-height: 2;
-
   .blue {
     color: blue;
   }
@@ -18,6 +16,8 @@ const StyledAbilites = styled.div`
 
     width: fit-content;
     padding: 0 2rem;
+
+    overflow: auto;
 
     background: rgb(45, 138, 123);
     background: linear-gradient(
@@ -39,7 +39,7 @@ const renderAbilities = (abilities = []) => {
     ) : (
       <span className="red">False</span>
     );
-    // const hiddenString = `hidden: ${hiddenStatus}`;
+
     const hiddenString = <p>Hidden: {hiddenStatus}</p>;
 
     return (

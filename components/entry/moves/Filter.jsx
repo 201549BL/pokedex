@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledFilter = styled.div`
-  line-height: 2;
-
   display: flex;
+  position: relative;
   flex-direction: column;
+  line-height: 1.2;
+
+  .btn {
+    padding: 0.1rem 0.2rem;
+    font-size: 1.2rem;
+
+    text-transform: capitalize;
+  }
 `;
 
 const Filter = ({
@@ -24,7 +31,17 @@ const Filter = ({
 
   return (
     <StyledFilter>
-      <button style={{ alignSelf: "end" }} onClick={onFilterClick}>
+      <button
+        className="btn"
+        style={{
+          alignSelf: "end",
+          position: "absolute",
+          transform: "translateY(-100%)",
+          marginRight: "0.5rem",
+          zIndex: "0",
+        }}
+        onClick={onFilterClick}
+      >
         {buttonTitle}
       </button>
       {getFilteredCapsules()}

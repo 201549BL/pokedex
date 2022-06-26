@@ -6,17 +6,19 @@ const GlobalStyle = createGlobalStyle`
     src: url('/fonts/pokemon-normal.woff2') format("woff2");
   }
 
-  body {
-    background: white;
-    font-family: "pokemon";
+  @font-face {
+    font-family: "pokemon-emerald";
+    src: url('/fonts/pkmnrs.ttf') format("truetype");
   }
+
+
 
   * {
     margin: 0;
     padding: 0;
-    font-family: "pokemon";
-
+    font-family: "pokemon-emerald";
     box-sizing: border-box;
+
   }
 `;
 

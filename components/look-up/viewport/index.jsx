@@ -6,7 +6,14 @@ const StyledViewport = styled.div`
   flex-direction: column;
   margin: 0 1rem;
 
-  background: #f9f9f9;
+  background: rgb(170, 170, 170);
+  background: linear-gradient(
+    0deg,
+    rgba(170, 170, 170, 1) 0%,
+    rgba(249, 249, 249, 1) 25%,
+    rgba(249, 249, 249, 1) 75%,
+    rgba(170, 170, 170, 1) 100%
+  );
 
   align-self: center;
   height: 80vh;
@@ -37,7 +44,8 @@ const StyledViewport = styled.div`
   }
 
   .indicator {
-    background: inherit;
+    background: rgba(249, 249, 249, 1);
+
     height: 2rem;
     width: 2rem;
 

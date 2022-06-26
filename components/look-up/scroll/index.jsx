@@ -1,7 +1,8 @@
-import React, { useMemo, useEffect, useCallback, useRef } from "react";
+import React, { useMemo, useEffect, useCallback, useRe } from "react";
 import Scrollbar from "../scrollbar";
 import styled from "styled-components";
 import useScrollbar from "../../../hooks/useScrollbar";
+import Link from "next/link";
 
 const StyledScroller = styled.div`
   flex-basis: 60%;
@@ -9,6 +10,8 @@ const StyledScroller = styled.div`
 
   height: 80vh;
   background: #ece836;
+
+  padding: 0 1rem;
 
   align-self: center;
 
@@ -18,6 +21,7 @@ const StyledScroller = styled.div`
   border-radius: 5px;
 
   position: relative;
+  z-index: 0;
 
   .padding {
     height: 50%;
@@ -40,6 +44,26 @@ const StyledScroller = styled.div`
 
   .entry {
     white-space: nowrap;
+    padding-left: 0.5rem;
+
+    :hover {
+      cursor: pointer;
+    }
+
+    :not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  ::after {
+    content: "";
+    position: absolute;
+    height: 4rem;
+    width: 90%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f9f9f9;
+    z-index: -1;
   }
 `;
 
@@ -52,13 +76,14 @@ const Scroller = React.forwardRef(
       () =>
         pokemonData.map((p, i) => {
           return (
-            <h2
-              key={p.name}
-              className="entry"
-              style={{ scrollSnapAlign: "center" }}
-            >
-              No{String(i + 1).padStart(3, "0")} {p.name}
-            </h2>
+            <Link href={`/${p.name}`} key={p.name}>
+              <h2 className="entry" style={{ scrollSnapAlign: "center" }}>
+                <a>
+                  <span>{String(i + 1).padStart(5, "No000")}</span>{" "}
+                  {p.name.toUpperCase()}
+                </a>
+              </h2>
+            </Link>
           );
         }),
       [pokemonData]

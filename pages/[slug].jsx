@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Abilities from "../components/entry/abilities";
 import Capsule from "../components/entry/capsule";
 
-import Types from "../components/entry/type/Types";
-
 import Pagination from "../components/entry/pagination";
 
 import InfoPage from "../components/entry/info-page";
@@ -24,13 +22,8 @@ export default function Entry({
       image={<Sprite name={name} spriteUrl={spriteUrl} types={types} />}
     >
       {[
-        <InfoPage key={"0"}>
-          <Abilities abilities={abilities} />
-        </InfoPage>,
-        <InfoPage key={"1"} />,
-        <InfoPage key={"2"}>
-          <Moves moves={moves} />
-        </InfoPage>,
+        <Abilities abilities={abilities} key="0" />,
+        <Moves moves={moves} key="1" />,
       ]}
     </Pagination>
   );
@@ -112,9 +105,10 @@ export async function getStaticProps({ params }) {
         accuracy: moveData.accuracy,
         power: moveData.power,
         dmgClass: moveData.damage_class.name,
-        effectEntry: String(moveData.effect_entries[0].short_effect)
-          // .replace(/\n/g, "")
-          .replace("$effect_chance%", `${moveData.effect_chance}%`),
+        effectEntry: String(moveData.effect_entries[0].short_effect).replace(
+          "$effect_chance%",
+          `${moveData.effect_chance}%`
+        ),
         typing: moveData.type.name,
       };
     })

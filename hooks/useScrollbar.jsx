@@ -18,8 +18,6 @@ const useScrollbar = () => {
       window.requestAnimationFrame(() => {
         renderNewPosition(scrollOffset);
       });
-
-      console.log(scrollOffset);
     },
     [scrollbarRef]
   );

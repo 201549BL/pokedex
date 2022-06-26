@@ -82,9 +82,6 @@ const StyledType = styled.span`
 
   border-radius: 5px;
 
-  width: fit-content;
-  height: fit-content;
-
   display: flex;
   justify-content: center;
   align-items: center;

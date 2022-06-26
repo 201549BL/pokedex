@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { textColor } from "../../../styles/mixins/textColor";
 
 export const StyledCapsule = styled.div`
-  line-height: 2;
-
   background-color: #9fd4a8;
 
   image-rendering: pixelated;
@@ -22,6 +20,8 @@ export const StyledCapsule = styled.div`
   .info-container__content__upper {
     display: flex;
     justify-content: space-between;
+    padding: 0.5rem;
+
     margin: 0 0.5rem;
 
     ${textColor("light")}
@@ -31,7 +31,9 @@ export const StyledCapsule = styled.div`
 
   .info-container__content__lower {
     background: #eaf8ea;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
+
+    line-height: 2;
 
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -44,7 +46,7 @@ export const StyledCapsule = styled.div`
       text-transform: capitalize;
     }
 
-    ${textColor("dark")}
+    ${textColor("dark")};
 
     &::before {
       content: "${({ prefix }) => prefix}";

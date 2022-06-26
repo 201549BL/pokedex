@@ -18,6 +18,7 @@ export const textColor = (theme) => {
 
   return css`
     color: ${themes[theme].color};
-    text-shadow: 0 2px ${themes[theme].shadow}, 2px 0 ${themes[theme].shadow};
+    text-shadow: 0 1.5px ${themes[theme].shadow},
+      1.5px 0 ${themes[theme].shadow};
   `;
 };
